@@ -9,6 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property int $uid 用户id
+ * @property int $sexual 性别
  * @property int $msg_tip 接收消息
  * @property int $display 显示资料
  */
@@ -29,7 +30,7 @@ class UserSetting extends \yii\db\ActiveRecord
     {
         return [
             [['uid'], 'integer'],
-            [['msg_tip', 'display'], 'integer'],
+            [['msg_tip', 'display', 'sexual'], 'integer'],
         ];
     }
 
