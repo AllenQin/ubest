@@ -54,7 +54,7 @@ class SignupForm extends Model
             $userInfo->uid = $user->id;
             $userInfo->avatar = $this->avatar;
             $userInfo->nickname = $this->nickname;
-            $userInfo->birthday = $this->birthday;
+            $userInfo->birthday = $this->birthday ? strtotime($this->birthday) : 0;
             $userInfo->gender = $this->gender;
 
             // 第三方信息
