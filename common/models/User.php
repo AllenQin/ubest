@@ -19,7 +19,6 @@ use yii\web\IdentityInterface;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
- * @property string $password write-only password
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -185,5 +184,43 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    /**
+     * 生成用户AccessToken
+     *
+     * @param $username
+     * @param $expiredTime
+     */
+    public function generateUserAccessToken($phone, $expiredTime)
+    {
+        $this->token = md5($this->auth_key . $phone . $expiredTime . 'ubest_');
+    }
+
+    /**
+     * 更新用户AccessToken
+     *
+     * @param $expiredTime
+     *
+     */
+    public function refreshUserAccessToken($expiredTime)
+    {
+        $this->generateUserAccessToken($this->username, $expiredTime);
+    }
+
+    public static $statusMap = [
+        self::STATUS_ACTIVE => '正常',
+        self::STATUS_DELETED => '封禁',
+    ];
+
+    public function attributeLabels()
+    {
+        return [
+            'id' => '用户id',
+            'username' => '用户名',
+            'status' => '账号状态',
+            'created_at' => '注册时间',
+            'updated_at' => '更新时间',
+        ];
     }
 }
