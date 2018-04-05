@@ -3,7 +3,7 @@
 
 [<<返回API文档列表](../API.md)
 
-##### 接口地址 http://pworld.allenqin.com/index.php?r=user/wei-xin-login
+##### 接口地址 http://ubest.allenqin.com/index.php?r=user/wei-xin-login
 
 ##### 请求方式 POST
 
