@@ -22,9 +22,9 @@ class m180405_132600_user_setting extends Migration
             'id' => $this->primaryKey(),
             'uid' => $this->integer(1)->unsigned()->notNull()->defaultValue(0)
                 ->comment('用户id'),
-            'msg_tip' => $this->tinyInteger(1)->unsigned()->notNull()->defaultValue(0)
+            'msg_tip' => $this->tinyInteger(1)->unsigned()->defaultValue(0)
                 ->comment('接收消息'),
-            'display' => $this->tinyInteger(1)->unsigned()->notNull()->defaultValue(0)
+            'display' => $this->tinyInteger(1)->unsigned()->defaultValue(0)
                 ->comment('显示资料'),
         ], $tableOptions);
     }

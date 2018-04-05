@@ -29,7 +29,7 @@ class UserSetting extends \yii\db\ActiveRecord
     {
         return [
             [['uid'], 'integer'],
-            [['msg_tip', 'display'], 'string', 'max' => 1],
+            [['msg_tip', 'display'], 'integer'],
         ];
     }
 

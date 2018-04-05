@@ -22,6 +22,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string $declaration 宣言
  * @property int $created_at 创建时间
  * @property int $updated_at 更新时间
+ * @property string $avatar 头像
  */
 class UserBaseInfo extends \yii\db\ActiveRecord
 {
@@ -40,10 +41,10 @@ class UserBaseInfo extends \yii\db\ActiveRecord
     {
         return [
             [['uid'], 'required'],
-            [['uid', 'birthday', 'last_active_time', 'industry', 'occupation', 'province', 'city', 'created_at', 'updated_at'], 'integer'],
+            [['uid', 'birthday', 'last_active_time', 'industry', 'occupation', 'province', 'city', 'created_at', 'updated_at', 'gender'], 'integer'],
             [['declaration'], 'string'],
             [['nickname', 'constellation'], 'string', 'max' => 60],
-            [['gender'], 'string', 'max' => 1],
+            [['avatar'], 'string', 'max' => 200],
         ];
     }
 
@@ -71,6 +72,7 @@ class UserBaseInfo extends \yii\db\ActiveRecord
             'occupation' => 'Occupation',
             'province' => 'Province',
             'city' => 'City',
+            'avatar' => '头像',
             'declaration' => 'Declaration',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

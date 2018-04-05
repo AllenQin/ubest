@@ -14,8 +14,8 @@ use yii\web\IdentityInterface;
  * @property string $username
  * @property string $password_hash
  * @property string $password_reset_token
- * @property string $email
  * @property string $auth_key
+ * @property string $token
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
@@ -40,7 +40,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
+            TimestampBehavior::class,
         ];
     }
 
@@ -52,6 +52,8 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            ['username', 'string', 'max' => 255],
+            [['username'], 'safe']
         ];
     }
 
@@ -68,7 +70,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+        return static::findOne(['token' => $token, 'status' => self::STATUS_ACTIVE]);
     }
 
     /**

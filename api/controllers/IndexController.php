@@ -23,6 +23,6 @@ class IndexController extends ApiController
             return $this->noAuth();
         }
 
-        return $this->success();
+        return $this->success(['uid' => $this->getUserId()]);
     }
 }

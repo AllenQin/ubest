@@ -22,20 +22,20 @@ class m180405_122236_user_base_info extends Migration
             'id' => $this->primaryKey(),
             'uid' => $this->integer(1)->unsigned()->notNull()->comment('用户uid'),
             'nickname' => $this->char(60)->null()->comment('用户昵称'),
-            'gender' => $this->tinyInteger(1)->unsigned()->notNull()
+            'gender' => $this->tinyInteger(1)->unsigned()
                 ->defaultValue(0)->comment('性别'),
-            'birthday' => $this->integer(1)->unsigned()->notNull()
+            'birthday' => $this->integer(1)->unsigned()
                 ->defaultValue(0)->comment('出生年月日'),
-            'constellation' => $this->char(60)->notNull()->comment('星座'),
-            'last_active_time' => $this->integer(1)->unsigned()->notNull()
+            'constellation' => $this->char(60)->comment('星座'),
+            'last_active_time' => $this->integer(1)->unsigned()
                 ->defaultValue(0)->comment('最后活跃时间'),
-            'industry' => $this->integer(1)->unsigned()->notNull()->defaultValue(0)
+            'industry' => $this->integer(1)->unsigned()->defaultValue(0)
                 ->comment('行业'),
-            'occupation' => $this->integer(1)->unsigned()->notNull()->defaultValue(0)
+            'occupation' => $this->integer(1)->unsigned()->defaultValue(0)
                 ->comment('职业'),
-            'province' => $this->integer(1)->unsigned()->notNull()->defaultValue(0)
+            'province' => $this->integer(1)->unsigned()->defaultValue(0)
                 ->comment('省份'),
-            'city' => $this->integer(1)->unsigned()->notNull()->defaultValue(0)
+            'city' => $this->integer(1)->unsigned()->defaultValue(0)
                 ->comment('城市'),
             'declaration' => $this->text()->comment('宣言'),
             'created_at' => $this->integer(1)->unsigned()

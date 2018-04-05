@@ -146,83 +146,26 @@ class ApiController extends Controller
      */
     private function bootstrap()
     {
-        $uid = Yii::$app->user->getId();
 
-        if ($uid) {
-            $cache = Yii::$app->redis;
-            $todayDate = date('Ymd');
+    }
 
-            if (!$cache->setnx("{$todayDate}-{$uid}", 1)) {
-                return false;
-            }
+    protected function getQuery($field, $default = 0)
+    {
+        return Yii::$app->request->get($field, $default);
+    }
 
-            // 验证每日登录奖励
-            $todayDate = date('Ymd');
-            $yesterdayDate = date('Ymd', strtotime('-1 day'));
-            $yearMonth = date('Ym');
+    protected function getPost($field, $default = 0)
+    {
+        return Yii::$app->request->post($field, $default);
+    }
 
-            $today = UserLoginRecord::find()
-                ->where(['uid' => $uid])
-                ->andWhere(['year_month_day' => $todayDate])
-                ->one();
+    protected function getAllQuery()
+    {
+        return Yii::$app->request->get();
+    }
 
-            // 领取奖励规则
-            $rewardRule = RewardRules::find()->asArray()->all();
-            if ($rewardRule) {
-                $rewardRule = array_column($rewardRule, 'gold_bean', 'day');
-            }
-            $loginDayRule = array_keys($rewardRule);
-
-            if (!$today) {
-                // 检测昨日是否登录 当前月
-                $yesterday = UserLoginRecord::find()
-                    ->where(['uid' => $uid])
-                    ->andWhere(['year_month' => $yearMonth])
-                    ->andWhere(['year_month_day' => $yesterdayDate])
-                    ->one();
-                if ($yesterday) {
-                    $continuity = $yesterday->continuity + 1;
-                } else {
-                    $continuity = 1;
-                }
-
-                /*
-                $repeat = UserLoginRecord::find()
-                    ->where(['uid' => $uid])
-                    ->andWhere(['year_month' => $yearMonth])
-                    ->andWhere(['continuity' => $continuity])
-                    ->one();
-                */
-
-                // 检测连续登录是否重复, 重复无奖励
-                // 连续登录超过规则指定的天数, 无奖励
-                if (!in_array($continuity, $loginDayRule)) {
-                    $isReward = 0;
-                    $goldBean = 0;
-                } else {
-                    $isReward = 1;
-                    $goldBean = $rewardRule[$continuity];
-                }
-
-                if ($isReward) {
-                    $data = [
-                        'uid' => $uid,
-                        'year_month' => $yearMonth,
-                        'year_month_day' => $todayDate,
-                        'continuity' => $continuity,
-                        'is_reward' => $isReward,
-                        'reward_gold_bean' => $goldBean,
-                    ];
-
-                    $model = new UserLoginRecord();
-                    $model->load($data, '');
-
-                    if($model->save()) {
-                        $userWallets = Wallets::findOne(['uid' => $uid]);
-                        $userWallets->increaseBean($goldBean, 3, "连续登录{$continuity}日奖励娃豆");
-                    }
-                }
-            }
-        }
+    protected function getAllPost()
+    {
+        return Yii::$app->request->post();
     }
 }

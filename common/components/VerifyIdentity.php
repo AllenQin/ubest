@@ -21,7 +21,7 @@ class VerifyIdentity extends Component
             }
 
             $user = User::findIdentityByAccessToken($token);
-            if (!$user || md5($user->auth_key . $user->username . $expireTime . '_adl') != $token
+            if (!$user || md5($user->auth_key . $user->username . $expireTime . 'ubest_') != $token
                 || $user->status == $user::STATUS_DELETED) {
                 return false;
             }
